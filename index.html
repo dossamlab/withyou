@@ -202,9 +202,16 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
 /* 응원 벽: 편지 */
 .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px;padding-top:6px}
 .msg{position:relative;border-radius:6px 6px 18px 18px;padding:22px 18px 14px;min-width:0;box-shadow:var(--shadow);background:var(--butter);transform:rotate(-1deg)}
-.msg:nth-child(4n+2){background:var(--blush);transform:rotate(.8deg)}
-.msg:nth-child(4n+3){background:var(--skyc);transform:rotate(-.5deg)}
-.msg:nth-child(4n){background:var(--mint);transform:rotate(1.1deg)}
+.msg:nth-child(4n+2){transform:rotate(.8deg)}
+.msg:nth-child(4n+3){transform:rotate(-.5deg)}
+.msg:nth-child(4n){transform:rotate(1.1deg)}
+.g-teacher{background:var(--butter)}.g-junior{background:var(--skyc)}.g-parent{background:var(--blush)}.g-other{background:var(--mint)}
+.msg .who{font-family:var(--body);font-size:.72rem;font-weight:800;padding:2px 9px;border-radius:99px;background:color-mix(in srgb,var(--paper) 75%,transparent);color:var(--ink);margin-right:6px;vertical-align:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.chip{font:inherit;font-size:.88rem;font-weight:700;padding:7px 14px;border-radius:99px;border:1.5px solid var(--line);background:var(--paper);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip i{width:12px;height:12px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ink) 18%,transparent)}
+.chip .n{font-variant-numeric:tabular-nums;opacity:.7}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 .msg::before{content:"";position:absolute;top:-9px;left:50%;width:64px;height:20px;transform:translateX(-50%) rotate(-3deg);background:color-mix(in srgb,var(--accent) 35%,transparent);border-radius:3px}
 .msg p{font-family:var(--letter);font-size:1.3rem;line-height:1.5;margin:0 0 10px;overflow-wrap:anywhere;white-space:pre-line}
 .msg .from{font-family:var(--letter);font-size:1.15rem;color:var(--muted);text-align:right}
@@ -736,9 +743,28 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     return rows;
   }
   var ENVELOPE = '<svg viewBox="0 0 120 84" aria-hidden="true"><rect x="4" y="10" width="112" height="70" rx="10" fill="var(--butter)" stroke="var(--accent)" stroke-width="3"/><path d="M8 16l52 36 52-36" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round"/><path d="M60 58c-6-4-13-8-13-14a6 6 0 0 1 13-3 6 6 0 0 1 13 3c0 6-7 10-13 14z" fill="var(--accent)"/></svg>';
-  function cards(list) {
-    return '<div class="wall">' + list.map(function (m) { return '<article class="msg"><p>' + esc(m.text) + '</p><div class="from">' + esc(m.from || "응원하는 사람") + "</div></article>"; }).join("") + "</div>";
+  var GROUPS = [["teacher", "선생님"], ["junior", "후배"], ["parent", "부모님"], ["other", "그 밖"]];
+  var GNAME = { teacher: "선생님", junior: "후배", parent: "부모님" };
+  var chosen = { wall: "all", after: "all" }; /* 화면별로 고른 보낸 사람 */
+  function cards(list, key) {
+    var present = GROUPS.filter(function (g) { return list.some(function (m) { return m.group === g[0]; }); });
+    if (chosen[key] !== "all" && !present.some(function (g) { return g[0] === chosen[key]; })) chosen[key] = "all";
+    var sel = chosen[key];
+    var chips = present.length < 2 ? "" : '<div class="chips" role="group" aria-label="보낸 사람으로 골라 보기">' + [["all", "전체"]].concat(present).map(function (g) {
+      var n = g[0] === "all" ? list.length : list.filter(function (m) { return m.group === g[0]; }).length;
+      return '<button type="button" class="chip" data-key="' + key + '" data-g="' + g[0] + '" aria-pressed="' + (sel === g[0]) + '">' + (g[0] === "all" ? "" : '<i class="g-' + g[0] + '"></i>') + g[1] + ' <span class="n">' + n + "</span></button>";
+    }).join("") + "</div>";
+    var shown = sel === "all" ? list : list.filter(function (m) { return m.group === sel; });
+    return chips + '<div class="wall">' + shown.map(function (m) {
+      return '<article class="msg g-' + m.group + '"><p>' + esc(m.text) + '</p><div class="from">' + (GNAME[m.group] ? '<span class="who">' + GNAME[m.group] + "</span>" : "") + esc(m.from || "응원하는 사람") + "</div></article>";
+    }).join("") + "</div>";
   }
+  document.addEventListener("click", function (e) {
+    var b = e.target && e.target.closest ? e.target.closest(".chip") : null;
+    if (!b) return;
+    chosen[b.getAttribute("data-key")] = b.getAttribute("data-g");
+    if (b.getAttribute("data-key") === "wall") renderWall(); else { afterState = ""; renderAfter(now()); }
+  });
   function emptyBox(title, body) {
     return '<div class="empty">' + ENVELOPE + "<b>" + title + "</b><span>" + body + "</span></div>";
   }
@@ -751,7 +777,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     }
     if (before.length) {
       $("#wall-count").innerHTML = '지금까지 <span class="count">' + before.length + "</span>통이 도착했어요.";
-      $("#wall-list").innerHTML = cards(before);
+      $("#wall-list").innerHTML = cards(before, "wall");
     } else {
       $("#wall-count").textContent = "";
       $("#wall-list").innerHTML = emptyBox("편지가 모이는 중이에요", "선생님, 후배, 부모님이 쓴 응원 편지가 도착하면 여기에 한 장씩 붙어요.");
@@ -765,7 +791,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
         lastData = txt;
         var list = parseCSV(txt).slice(1)
           .filter(function (r) { return r[1] && r[1].trim(); })
-          .map(function (r) { return { from: (r[0] || "").trim(), text: r[1].trim(), type: (r[2] || "").trim() }; });
+          .map(function (r) { var g = (r[3] || "").trim(); return { from: (r[0] || "").trim(), text: r[1].trim(), type: (r[2] || "").trim(), group: GNAME[g] ? g : "other" }; });
         before = list.filter(function (m) { return m.type !== "after"; });
         afterM = list.filter(function (m) { return m.type === "after"; });
         loaded = true; failed = false;
@@ -785,7 +811,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     }
     if (afterState === "open") return;
     afterState = "open";
-    box.innerHTML = afterM.length ? '<div style="margin-bottom:18px">' + cards(afterM) + "</div>" : '<div style="margin-bottom:16px">' + emptyBox("축하 편지를 모으고 있어요", "선생님, 후배, 부모님의 편지가 도착하면 여기에 붙어요.") + "</div>";
+    box.innerHTML = afterM.length ? '<div style="margin-bottom:18px">' + cards(afterM, "after") + "</div>" : '<div style="margin-bottom:16px">' + emptyBox("축하 편지를 모으고 있어요", "선생님, 후배, 부모님의 편지가 도착하면 여기에 붙어요.") + "</div>";
   }
 
   /* ---------- 매초 갱신 ---------- */
