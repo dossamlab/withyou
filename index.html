@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Pen+Script&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Batang:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Pen+Script&display=swap">
 <style>
 /* Layout: 수능 날 하루의 하늘(새벽→낮→노을→밤)을 머리 그림으로, 아래는 둥근 편지지 카드가 한 줄로 이어짐 */
 :root{
@@ -39,6 +39,7 @@
   --display:"Gowun Batang","Nanum Myeongjo",serif;
   --body:"Nanum Gothic","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --hand:"Nanum Pen Script","Gaegu",cursive;
+  --letter:"Gaegu","Nanum Pen Script",cursive;
 }
 /* 선물용 페이지라 어떤 테마에서 열어도 밝고 따뜻한 색 하나로 보이게 고정 */
 :root,:root[data-theme="dark"]{color-scheme:light}
@@ -205,8 +206,8 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
 .msg:nth-child(4n+3){background:var(--skyc);transform:rotate(-.5deg)}
 .msg:nth-child(4n){background:var(--mint);transform:rotate(1.1deg)}
 .msg::before{content:"";position:absolute;top:-9px;left:50%;width:64px;height:20px;transform:translateX(-50%) rotate(-3deg);background:color-mix(in srgb,var(--accent) 35%,transparent);border-radius:3px}
-.msg p{font-family:var(--hand);font-size:1.6rem;line-height:1.3;margin:0 0 10px;overflow-wrap:anywhere;white-space:pre-line}
-.msg .from{font-family:var(--hand);font-size:1.25rem;color:var(--muted);text-align:right}
+.msg p{font-family:var(--letter);font-size:1.3rem;line-height:1.5;margin:0 0 10px;overflow-wrap:anywhere;white-space:pre-line}
+.msg .from{font-family:var(--letter);font-size:1.15rem;color:var(--muted);text-align:right}
 .empty{text-align:center;padding:34px 20px 30px;border-radius:24px;background:var(--paper);border:2px dashed var(--line)}
 .empty svg{width:110px;height:auto;display:block;margin:0 auto 12px}
 .empty b{font-family:var(--display);font-size:1.2rem;display:block;margin-bottom:4px}
@@ -280,7 +281,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
       <div class="meter" id="ban-meter"><div class="bar"><i></i></div><span></span></div>
       <ul class="checks" id="ban-list"></ul>
       <p class="cheer">가방 정리 끝! 잘했어요.</p>
-      <p class="note"><strong>깜빡하고 가져왔다면 1교시 시작 전에 감독관에게 내면 괜찮아요.</strong> 모든 시험이 끝나면 돌려받아요. 내지 않고 갖고 있다가 걸리면 시험 시간이든 쉬는 시간이든 부정행위로 처리돼요.</p>
+      <p class="note"><strong>깜빡하고 가져왔다면 1교시 시작 전에 감독관에게 내면 괜찮아요.</strong> 자기가 보는 시험이 모두 끝나면 돌려받아요. 내지 않고 갖고 있다가 걸리면 시험 시간이든 쉬는 시간이든 부정행위로 처리되고 시험이 무효가 돼요.</p>
     </div>
 
     <div class="block">
@@ -289,7 +290,8 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
         <div class="p1"><b>시험 중 갖고 있으면 부정행위</b><ul><li>교과서</li><li>참고서</li><li>기출문제지</li></ul></div>
         <div class="p2"><b>시험 중 걸리면 압수</b><ul><li>연습장</li><li>개인 샤프</li><li>볼펜, 예비 마킹용 플러스펜</li><li>기름종이</li></ul></div>
       </div>
-      <p class="note">샤프와 검은색 컴퓨터용 사인펜은 1교시 전에 시험실에서 나눠 줘요. 직접 가져가도 되는 필기구는 검은색 컴퓨터용 사인펜, 흑색 연필, 지우개, 흰색 수정테이프, 0.5mm 흑색 샤프심뿐이에요.</p>
+      <p class="sub" style="margin:10px 0 0">압수에 따르지 않으면 부정행위로 처리될 수 있어요.</p>
+      <p class="note">샤프와 검은색 컴퓨터용 사인펜은 1교시 전에 시험실에서 나눠 줘요. 직접 가져가도 되는 필기구는 검은색 컴퓨터용 사인펜, 흑색 연필, 지우개, 흰색 수정테이프, 0.5mm 흑색 샤프심뿐이에요. 답안지에는 검은색 컴퓨터용 사인펜만 써요.</p>
     </div>
 
     <div class="block">
@@ -313,7 +315,8 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
           </ol>
         </div>
       </div>
-      <p class="note">시침·분침이 있는 아날로그 시계만 가져갈 수 있어요. 결제·통신(블루투스) 기능이나 LCD·LED 화면이 있으면 안 돼요. 1교시와 3교시 시작 전에 시계를 신분증·수험표와 함께 책상 위에 올려 두면 감독관이 확인해요.</p>
+      <p class="note" id="clock-note" hidden></p>
+      <p class="note">시침·분침이 있는 아날로그 시계만 가져갈 수 있어요. 결제·통신(블루투스) 기능이나 LCD·LED 화면이 있으면 안 돼요. 1교시와 3교시 시작 전에는 시계를 신분증·수험표와 함께 책상 위에 올려 두고 감독관의 확인을 받아요. 다른 교시에도 감독관이 시계를 확인해요.</p>
     </div>
 
     <div class="block">
@@ -360,7 +363,12 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
         <a class="btn primary" id="go-kakao" target="_blank" rel="noopener" aria-disabled="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>카카오맵으로 찾기</a>
         <a class="btn" id="go-naver" target="_blank" rel="noopener" aria-disabled="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>네이버 지도로 찾기</a>
       </div>
-      <p class="note">이름이 같은 학교가 다른 지역에 있을 수 있으니 시·군 이름을 같이 적어요. 시험장과 시험실은 예비소집 때 미리 확인해 두면 마음이 편해요.</p>
+      <p class="note">이름이 같은 학교가 다른 지역에 있을 수 있으니 시·군 이름을 같이 적어요. 시험 전날인 11월 18일 예비소집에 꼭 참석해서 수험표를 받고, 시험장 위치를 확인해요.</p>
+    </div>
+
+    <div class="block">
+      <h3><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/></svg></span>수험표를 잃어버렸다면</h3>
+      <p class="sub" style="margin:8px 0 0">응시원서에 붙인 것과 같은 사진 1장과 신분증을 들고, 시험 당일 오전 8시까지 시험장 안의 시험 관리본부로 가면 다시 받을 수 있어요. 사진이 없어도 시험 관리본부에 알리면 임시 수험표를 받을 수 있어요.</p>
     </div>
 
     <div class="block">
@@ -380,7 +388,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     <div class="block">
       <h3><span class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span>오늘의 시간표</h3>
       <ul class="tl" id="tt" style="margin-top:12px"></ul>
-      <p class="note">제2외국어/한문을 보지 않는 학생은 16:37에 끝나요. 2~5교시는 시험 시작 10분 전까지 입실해요.</p>
+      <p class="note">제2외국어/한문을 보지 않는 학생은 16:37에 끝나요. 2~5교시는 시험 시작 10분 전까지 입실해요. 시험편의를 제공받는 수험생은 시험 시간이 이 표와 달라요.</p>
     </div>
   </section>
 
@@ -392,8 +400,8 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     <div class="block">
       <h3><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span>시험 끝나고 할 일</h3>
       <ul class="tl todo" style="margin-top:12px">
-        <li class="exam"><span class="t">11월 19일</span><span class="s"><b>맡긴 물건 돌려받기</b><span>1교시 전에 감독관에게 낸 물건은 모든 시험이 끝난 뒤 돌려받아요.</span></span></li>
-        <li class="exam"><span class="t">11월 19일</span><span class="s"><b>수험표 뒷면 가채점표로 가채점</b><span>문제와 정답은 교시마다 시험이 끝난 뒤 <a href="https://www.kice.re.kr" target="_blank" rel="noopener">한국교육과정평가원 홈페이지</a>에 올라와요.</span></span></li>
+        <li class="exam"><span class="t">11월 19일</span><span class="s"><b>맡긴 물건 돌려받기</b><span>1교시 전에 감독관에게 낸 물건은 자기가 보는 시험이 모두 끝난 뒤 돌려받아요.</span></span></li>
+        <li class="exam"><span class="t">11월 19일</span><span class="s"><b>수험표 뒷면 가채점표로 가채점</b><span>문제와 정답은 교시별로 <a href="https://www.kice.re.kr" target="_blank" rel="noopener">한국교육과정평가원 홈페이지</a>에 올라와요. 시험 시간이 연장되는 수험생의 시험까지 끝난 뒤에 올라와서, 교시가 끝나는 시각보다 늦어요.</span></span></li>
         <li class="exam"><span class="t">11월 19~23일</span><span class="s"><b>문제·정답 이의신청</b><span>평가원 홈페이지의 전용 게시판에서 받아요.</span></span></li>
         <li class="exam"><span class="t">12월 1일 화</span><span class="s"><b>정답 확정 발표</b><span>17:00에 평가원 홈페이지에 올라와요.</span></span></li>
         <li class="exam"><span class="t">12월 11일 금</span><span class="s"><b>성적통지표 받는 날</b><span>재학생은 학교에서 09:00 이후 받아요. 14:00부터는 <a href="https://mycsat.re.kr" target="_blank" rel="noopener">mycsat.re.kr</a>에서 본인인증 후 온라인으로도 발급돼요.</span></span></li>
@@ -401,7 +409,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     </div>
   </section>
 
-  <p class="foot"><span class="hand">여러분의 내일을 늘 응원해요</span>시간표와 유의사항은 한국교육과정평가원 「2027학년도 대학수학능력시험 시행세부계획 공고」(2026. 7. 1.)를 따랐어요.<br>시험장에서 감독관의 안내가 다르면 감독관 안내를 따라요.</p>
+  <p class="foot"><span class="hand">여러분의 내일을 늘 응원해요</span>시간표와 유의사항은 한국교육과정평가원 「2027학년도 대학수학능력시험 시행세부계획 공고」(2026. 7. 1.)와 교육부 수험생 유의사항을 따랐어요.<br>시험장에서 감독관의 안내가 다르면 감독관 안내를 따라요.</p>
 </main>
 
 <script>
@@ -429,6 +437,22 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
   };
   var UNLOCK = at("16:37");
 
+  /* 기기 시계가 서버 시각과 2초 넘게 다르면 서버 시각에 맞춰 보여 준다 */
+  var skew = 0;
+  function now() { return Date.now() + skew; }
+  function checkClock() {
+    var t0 = Date.now();
+    fetch("?clock=" + t0, { method: "HEAD", cache: "no-store" }).then(function (r) {
+      var t1 = Date.now(), srv = Date.parse(r.headers.get("Date") || "");
+      if (!srv || t1 - t0 > 3000) return;
+      var diff = srv + 500 - (t0 + t1) / 2;
+      skew = Math.abs(diff) > 2000 ? Math.round(diff) : 0;
+      var note = $("#clock-note"), sec = Math.round(Math.abs(skew) / 1000);
+      note.hidden = !skew;
+      if (skew) note.textContent = "이 기기의 시계가 표준시보다 " + (sec >= 120 ? "약 " + Math.round(sec / 60) + "분 " : sec + "초 ") + (skew > 0 ? "느려서" : "빨라서") + " 서버 시각에 맞춰 보여 드려요. 기기 설정에서 날짜와 시간을 자동으로 맞추게 해 두세요.";
+    }).catch(function () {});
+  }
+
   /* ---------- 하늘의 별 ---------- */
   (function () {
     var s = "", pts = [[8,18],[16,62],[24,30],[33,78],[41,12],[52,48],[60,22],[68,70],[77,40],[85,14],[92,58],[12,86],[47,90],[73,88],[30,52],[63,6],[88,82],[5,45]];
@@ -449,11 +473,15 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     if (t < at("18:00", "2026-11-18")) return "wall";
     if (t < at("05:00")) return "night";
     if (t < at("08:40")) return "morning";
-    if (t < at("17:45")) return "live";
+    if (t < UNLOCK) return "live";
     return "after";
   }
-  function show(id, push) {
-    if (TABS.indexOf(id) < 0) id = defaultTab(Date.now());
+  var current = null;      /* 지금 보이는 탭 */
+  var manual = false;      /* 보는 사람이 시각과 다른 탭을 직접 골랐는지 */
+  var shownDefault = null; /* 마지막으로 확인한 '시각에 맞는 탭' */
+  var hidDefault = null;   /* 화면이 꺼질 때의 '시각에 맞는 탭' */
+  function show(id) {
+    current = id;
     TABS.forEach(function (k) {
       $("#" + k).hidden = k !== id;
       var b = $("#tab-" + k);
@@ -462,20 +490,43 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     });
     $("#hero").setAttribute("data-tab", id);
     $("#letter").innerHTML = LETTERS[id] + '<span class="sign">선생님이</span>';
-    if (push && location.hash !== "#" + id) { try { history.replaceState(null, "", "#" + id); } catch (e) { location.hash = id; } }
+  }
+  function pick(id) { show(id); manual = id !== defaultTab(now()); }
+  /* 경계 시각을 지나면 시각에 맞는 탭으로 넘긴다. 다른 탭을 직접 보고 있는 중이면 그대로 둔다. */
+  function syncTab() {
+    var d = defaultTab(now());
+    if (d === shownDefault) return;
+    shownDefault = d;
+    if (!manual || current === d) { manual = false; show(d); }
+  }
+  /* 주소 끝의 #탭이름은 열 때 한 번만 쓰고 지운다. 새로고침하면 다시 시각에 맞는 탭이 뜬다. */
+  function fromHash() {
+    var h = location.hash.slice(1);
+    if (TABS.indexOf(h) < 0) return false;
+    pick(h);
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+    return true;
   }
   TABS.forEach(function (k, i) {
     var b = $("#tab-" + k);
-    b.addEventListener("click", function () { show(k, true); });
+    b.addEventListener("click", function () { pick(k); });
     b.addEventListener("keydown", function (e) {
       var n = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
       if (!n) return;
       var next = TABS[(i + n + TABS.length) % TABS.length];
-      show(next, true); $("#tab-" + next).focus();
+      pick(next); $("#tab-" + next).focus();
     });
   });
-  window.addEventListener("hashchange", function () { show(location.hash.slice(1), false); });
-  show(location.hash.slice(1), false);
+  window.addEventListener("hashchange", fromHash);
+  /* 화면을 껐다 켠 사이에 경계 시각이 지났으면 시각에 맞는 탭으로 돌아간다. */
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { hidDefault = defaultTab(now()); return; }
+    checkClock();
+    var d = defaultTab(now());
+    if (hidDefault && d !== hidDefault) { manual = false; shownDefault = d; show(d); }
+  });
+  shownDefault = defaultTab(now());
+  if (!fromHash()) show(shownDefault);
 
   /* ---------- 머리말 ---------- */
   function renderHead(t) {
@@ -492,16 +543,16 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     ["phone", "휴대폰", "꺼 두었어도 가져가면 안 돼요."],
     ["watch", "스마트워치·스마트밴드", "통신·결제 기능이 있는 물건은 모두 안 돼요."],
     ["glasses", "스마트안경", "평소 쓰는 일반 안경은 괜찮아요."],
-    ["ear", "블루투스 이어폰·태블릿", ""],
+    ["ear", "이어폰·태블릿", "블루투스 같은 통신 기능이 있는 것은 안 돼요."],
     ["dict", "전자사전·화면이 있는 텀블러", "LCD·LED 화면이 달린 물건은 모두 안 돼요."],
     ["digital", "전자시계", "숫자가 화면에 뜨는 시계 대신 바늘 시계를 챙겨요."],
     ["battery", "보조배터리 같은 충전식 물건", ""]
   ];
   var BRING = [
     ["ticket", "수험표", "뒷면에 가채점표가 있어요."],
-    ["id", "사진이 붙은 신분증", "주민등록증, 여권, 청소년증, 학생증 등"],
+    ["id", "사진이 붙은 신분증", "유효기간이 남은 주민등록증, 청소년증, 주민등록번호가 표시된 여권 등. 모바일 신분증은 안 돼요."],
     ["clock", "아날로그 시계", "어젯밤에 맞춰 둔 바늘 시계"],
-    ["pen", "검은색 컴퓨터용 사인펜", "시험장에서도 나눠 주지만 평소 쓰던 것을 가져가도 돼요."],
+    ["pen", "검은색 컴퓨터용 사인펜", "시험장에서도 나눠 주지만 평소 쓰던 것을 가져가도 돼요. 답안지에는 이 펜만 써요."],
     ["pencil", "흑색 연필·지우개·흰색 수정테이프", "필요한 사람만"],
     ["lunch", "점심 도시락과 물", "점심시간은 12:10부터, 3교시 입실은 13:00까지"],
     ["coat", "따뜻한 겉옷", "입고 벗기 쉬운 옷이면 좋아요."],
@@ -595,10 +646,11 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     }
     $("#card4").innerHTML = '<div class="cap"><b>4교시 한국사·탐구</b><span class="num">14:50–16:37</span></div><ol>' + rows.join("") + "</ol>";
     tips.push("<b>한국사는 꼭 봐야 해요.</b> 보지 않으면 수능 성적 전체가 무효가 돼요.");
-    if (m === "ss2") tips.push("탐구 과목은 응시원서에 과목 번호 순서대로 적기 때문에 그 순서로 정리했어요. <b>수험표에 적힌 순서와 같은지 확인하고, 다르면 수험표를 따라요.</b>");
-    if (m === "voc2") tips.push("직업탐구 2과목은 성공적인 직업생활을 제1선택으로 먼저 봐요. 수험표의 순서도 확인해요.");
-    if (m === "ss2" || m === "voc2") tips.push("제1선택 시간에 다른 과목 문제지를 보거나 두 과목 문제지를 함께 보면 부정행위예요.");
-    if (m === "ss1" || m === "voc1") tips.push("고른 과목이 수험표에 적힌 과목과 같은지 확인해요.");
+    if (m === "ss2") tips.push("탐구 과목은 응시원서에 과목 번호 순서대로 적기 때문에 그 순서로 정리했어요. <b>수험표와 시험실 책상 위 스티커에 적힌 순서와 같은지 확인하고, 다르면 수험표와 스티커를 따라요.</b>");
+    if (m === "voc2") tips.push("직업탐구 2과목은 성공적인 직업생활을 제1선택으로 먼저 봐요. 수험표와 시험실 책상 위 스티커의 순서도 확인해요.");
+    if (m === "ss2" || m === "voc2") tips.push("과목마다 그 시간의 문제지만 책상 위에 올려놓고 풀어요. 다른 과목 문제지를 보거나 두 과목 문제지를 함께 보면 부정행위예요.");
+    if (m === "ss2" || m === "voc2") tips.push("제2선택 시간에 이미 끝난 제1선택 과목의 답안을 쓰거나 고치면 부정행위로 시험이 무효가 돼요.");
+    if (m === "ss1" || m === "voc1") tips.push("고른 과목이 수험표와 시험실 책상 위 스티커에 적힌 과목과 같은지 확인해요.");
     $("#warn4").innerHTML = tips.map(function (w) { return "<li><span>" + w + "</span></li>"; }).join("");
   }
   mode.value = ["ss2", "ss1", "voc2", "voc1", "none"].indexOf(saved.mode) >= 0 ? saved.mode : "ss2";
@@ -640,7 +692,6 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     ["16:37", "17:05", "쉬는 시간", "gap", "4교시까지 보는 학생은 여기서 끝 · 16:55까지 입실"],
     ["17:05", "17:45", "5교시 제2외국어/한문", "exam", "40분"]
   ].map(function (r) { return { s: at(r[0]), e: at(r[1]), hs: r[0], he: r[1], title: r[2], kind: r[3], note: r[4] }; });
-  var DAY_START = at("08:40"), DAY_END = at("17:45");
   var lastTT = "";
   function renderLive(t) {
     var cur = null;
@@ -652,8 +703,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
       html = '<div class="k">오늘 · 입실 전</div><div class="title">입실 완료까지 ' + fmtLeft(SCHED[0].s - t) + '</div><div class="range">08:10까지 시험실 입실</div>';
     } else if (cur) {
       var pct = (t - cur.s) / (cur.e - cur.s) * 100;
-      var dayPct = Math.min(100, Math.max(0, (t - DAY_START) / (DAY_END - DAY_START) * 100));
-      html = '<div class="k">' + (cur.kind === "exam" ? "지금 시험 보는 중" : "지금") + '</div><div class="title">' + esc(cur.title) + '</div><div class="range">' + cur.hs + "–" + cur.he + '</div><div class="left">' + (cur.kind === "exam" ? "끝나기까지 " : "다음 일정까지 ") + fmtLeft(cur.e - t) + '</div><div class="bar" aria-hidden="true"><i style="width:' + pct.toFixed(1) + '%"></i></div>' + (t >= UNLOCK ? '<p class="extra">4교시까지 보는 학생은 시험이 끝났어요. ‘끝난 뒤’ 화면에 축하 편지가 열렸어요.</p>' : '<p class="extra">오늘 시험의 ' + Math.round(dayPct) + "%를 지나왔어요.</p>");
+      html = '<div class="k">' + (cur.kind === "exam" ? "지금 시험 보는 중" : "지금") + '</div><div class="title">' + esc(cur.title) + '</div><div class="range">' + cur.hs + "–" + cur.he + '</div><div class="left">' + (cur.kind === "exam" ? "끝나기까지 " : "다음 일정까지 ") + fmtLeft(cur.e - t) + '</div><div class="bar" aria-hidden="true"><i style="width:' + pct.toFixed(1) + '%"></i></div>' + (t >= UNLOCK ? '<p class="extra">4교시까지 보는 학생은 시험이 끝났어요. ‘끝난 뒤’ 화면에 축하 편지가 열렸어요.</p>' : "");
     } else if (t < at("00:00", "2026-11-20")) {
       html = '<div class="k">오늘</div><div class="title">모든 시험이 끝났어요</div><p class="extra">‘끝난 뒤’ 화면에서 축하 편지와 할 일을 확인해요.</p>';
     } else {
@@ -721,7 +771,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
         loaded = true; failed = false;
         renderWall();
         afterState = "";
-        renderAfter(Date.now());
+        renderAfter(now());
       })
       .catch(function () { if (!loaded) { failed = true; renderWall(); } });
   }
@@ -740,12 +790,13 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
 
   /* ---------- 매초 갱신 ---------- */
   function tick() {
-    var t = Date.now();
-    renderHead(t); renderClock(t); renderLive(t); renderAfter(t);
+    var t = now();
+    syncTab(); renderHead(t); renderClock(t); renderLive(t); renderAfter(t);
   }
   renderWall();
   tick();
   setInterval(tick, 1000);
+  checkClock();
   load();
   setInterval(load, 120000);
 })();
