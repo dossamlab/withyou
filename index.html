@@ -256,6 +256,42 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
   .tl li{grid-template-columns:16px 92px 1fr;gap:10px}
   .block{padding:18px 16px}
 }
+/* ---------- PC: 넓은 화면에서는 머리를 좌우로 나누고 안내 카드를 두 단으로 ---------- */
+@media (min-width:900px){
+  .wrap{max-width:1000px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}
+  .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto 1fr;column-gap:56px;padding-block:44px 40px}
+  .hero .eyebrow{grid-column:1;flex-direction:row;flex-wrap:wrap;gap:0 10px;max-width:none}
+  .hero .eyebrow span + span::before{content:"·";margin-right:10px;color:var(--line-strong)}
+  .hero .dday{grid-column:1;font-size:6rem}
+  .hero .dday.long{font-size:3.6rem}
+  .hero .dday-sub{grid-column:1;font-size:1.45rem}
+  .hero .letter{grid-column:2;grid-row:1 / span 3;align-self:end;margin:0;padding:22px 0 0 34px;border-top:0;border-left:1.5px dashed var(--line-strong);font-size:1.75rem}
+  .stamp{top:58px;right:auto;left:calc(50% - 210px);width:150px}
+  .tabs ul{max-width:640px;margin:0 auto}
+  .tabs button{font-size:.85rem;padding:11px 4px 9px}
+  section[role="tabpanel"]{padding-top:36px}
+  h2{font-size:1.75rem}
+  .lede{font-size:1rem;margin-bottom:26px}
+  #night,#morning{columns:2;column-gap:20px}
+  #live{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);column-gap:20px;align-items:start}
+  #live > .kicker,#live > h2,#live > .lede{grid-column:1 / -1;justify-self:start}
+  #live .now{position:sticky;top:calc(env(safe-area-inset-top,0px) + 100px)}
+  #night > .kicker,#morning > .kicker{display:table}
+  #night > h2,#night > .lede,#morning > h2,#morning > .lede{column-span:all}
+  #night .block,#morning .block{break-inside:avoid;display:inline-block;width:100%;margin-bottom:20px}
+  #night .clock{grid-template-columns:1fr;justify-items:center}
+  #night .clock .digital{width:100%}
+  #night .pick{grid-template-columns:1fr}
+  .write{grid-template-columns:auto 1fr;align-items:center;column-gap:16px;margin-bottom:34px}
+  .write .btn{width:auto;padding:14px 34px}
+  .write span{text-align:left}
+  .wall{grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 24px;align-items:start}
+  #after .block{max-width:640px}
+  .foot{margin-top:56px}
+}
+@media (min-width:900px) and (max-width:1023px){
+  .wall{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
