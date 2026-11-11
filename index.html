@@ -225,6 +225,8 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
 .chip .n{font-variant-numeric:tabular-nums;opacity:.7}
 .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
 .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:28px 18px;padding-top:12px}
+.wall.mason{display:flex;align-items:flex-start;gap:18px}
+.wall.mason .col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:28px}
 .msg{position:relative;border-radius:16px;padding:28px 20px 16px;min-width:0;border:1px solid transparent;box-shadow:var(--shadow-sticky);transform:rotate(-.5deg)}
 .msg:nth-child(4n+2){transform:rotate(.6deg)}
 .msg:nth-child(4n+3){transform:rotate(-.3deg)}
@@ -286,6 +288,8 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
   .write .btn{width:auto;padding:14px 34px}
   .write span{text-align:left}
   .wall{grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 24px;align-items:start}
+  .wall.mason{gap:24px}
+  .wall.mason .col{gap:34px}
   #after .block{max-width:640px}
   .foot{margin-top:56px}
 }
@@ -814,8 +818,8 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
       return '<button type="button" class="chip" data-key="' + key + '" data-g="' + g[0] + '" aria-pressed="' + (sel === g[0]) + '">' + (g[0] === "all" ? "" : '<i class="g-' + g[0] + '"></i>') + g[1] + ' <span class="n">' + n + "</span></button>";
     }).join("") + "</div>";
     var shown = sel === "all" ? list : list.filter(function (m) { return m.group === sel; });
-    return chips + '<div class="wall">' + shown.map(function (m) {
-      return '<article class="msg g-' + m.group + '"><p>' + esc(m.text) + '</p><div class="from">' + (GNAME[m.group] ? '<span class="who">' + GNAME[m.group] + "</span>" : "") + esc(m.from || "응원하는 사람") + "</div></article>";
+    return chips + '<div class="wall">' + shown.map(function (m, i) {
+      return '<article class="msg g-' + m.group + '" data-i="' + i + '"><p>' + esc(m.text) + '</p><div class="from">' + (GNAME[m.group] ? '<span class="who">' + GNAME[m.group] + "</span>" : "") + esc(m.from || "응원하는 사람") + "</div></article>";
     }).join("") + "</div>";
   }
   document.addEventListener("click", function (e) {
@@ -824,6 +828,37 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     chosen[b.getAttribute("data-key")] = b.getAttribute("data-g");
     if (b.getAttribute("data-key") === "wall") renderWall(); else { afterState = ""; renderAfter(now()); }
   });
+  /* 넓은 화면: 다음 편지를 지금 가장 짧은 단에 붙여 빈칸 없이 쌓기 */
+  function wallCols(w) {
+    if (window.innerWidth >= 1024) return 3;
+    if (window.innerWidth >= 900) return 2;
+    return Math.max(1, Math.floor((w + 18) / 258));
+  }
+  function layoutWalls(force) {
+    [].forEach.call(document.querySelectorAll(".wall"), function (wall) {
+      var w = wall.offsetWidth;
+      if (!w) return;
+      var n = wallCols(w);
+      if (!force && wall.getAttribute("data-n") === String(n)) return;
+      var items = [].slice.call(wall.querySelectorAll(".msg")).sort(function (a, b) { return a.getAttribute("data-i") - b.getAttribute("data-i"); });
+      wall.innerHTML = "";
+      wall.setAttribute("data-n", n);
+      wall.classList.toggle("mason", n > 1);
+      if (n < 2) { items.forEach(function (m) { wall.appendChild(m); }); return; }
+      var cols = [];
+      for (var c = 0; c < n; c++) { cols.push(wall.appendChild(document.createElement("div"))); cols[c].className = "col"; }
+      items.forEach(function (m) {
+        var s = cols[0];
+        cols.forEach(function (col) { if (col.offsetHeight < s.offsetHeight) s = col; });
+        s.appendChild(m);
+      });
+    });
+  }
+  window.addEventListener("resize", function () { layoutWalls(false); });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { layoutWalls(true); });
+    if (document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", function () { layoutWalls(true); });
+  }
   function emptyBox(title, body) {
     return '<div class="empty">' + ENVELOPE + "<b>" + title + "</b><span>" + body + "</span></div>";
   }
@@ -837,6 +872,7 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     if (before.length) {
       $("#wall-count").innerHTML = '지금까지 <span class="count">' + before.length + "</span>통이 도착했어요.";
       $("#wall-list").innerHTML = cards(before, "wall");
+      layoutWalls(true);
     } else {
       $("#wall-count").textContent = "";
       $("#wall-list").innerHTML = emptyBox("편지가 모이는 중이에요", "선생님, 후배, 부모님이 쓴 응원 편지가 도착하면 여기에 한 장씩 붙어요.");
@@ -871,12 +907,14 @@ select:focus,input[type="text"]:focus{border-color:var(--accent);outline:none;bo
     if (afterState === "open") return;
     afterState = "open";
     box.innerHTML = afterM.length ? '<div style="margin-bottom:18px">' + cards(afterM, "after") + "</div>" : '<div style="margin-bottom:16px">' + emptyBox("축하 편지를 모으고 있어요", "선생님, 후배, 부모님의 편지가 도착하면 여기에 붙어요.") + "</div>";
+    layoutWalls(true);
   }
 
   /* ---------- 매초 갱신 ---------- */
   function tick() {
     var t = now();
     syncTab(); renderHead(t); renderClock(t); renderLive(t); renderAfter(t);
+    layoutWalls(false);
   }
   renderWall();
   tick();
